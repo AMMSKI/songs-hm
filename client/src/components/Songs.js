@@ -2,35 +2,61 @@ import React, {Component} from 'react'
 import { Button, Container } from 'semantic-ui-react'
 import Song from './Song'
 import SongForm from './SongForm'
+import axios from 'axios'
 
 class Songs extends Component {
   state = {
-    songs: [
-    {id: 1, name:'song1', author: 'author1'},
-    {id: 2, name:'song2', author: 'author2'},
-    {id: 3, name:'song3', author: 'author3'}
-    ],
+    songs: [],
     showForm: false,
   }
 
-  addSong = (song) => {
+  componentDidMount() {
+    console.log('mounted')
+    this.getSongs()
+  }
+
+  getSongs = async () => {
+    try{
+    let res = await axios.get('/songs')
+    this.setState({songs: res.data})
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  addSong = async (song) => {
+    try{
+    await axios.post('/songs', song)
     this.setState({
       songs: [song, ...this.state.songs]
     })
+    }catch(err){
+      console.log(err)
+    }
   }
 
-  updateSong = (song) => {
+  updateSong = async (song) => {
+    try{
+    await axios.put(`/songs/${song.id}`, song)
     const updatedSongs = this.state.songs.map((s)=> s.id === song.id ? song : s)
     this.setState({
       songs: updatedSongs
     })
+    }catch(err){
+      console.log(err)
+    }
   } 
 
-  deleteSong = (id) => {
+  deleteSong = async (id) => {
+    try{
+    await axios.delete(`/songs/${id}`)
     const filteredSongs = this.state.songs.filter((s)=> s.id !== id)
     this.setState({
       songs: filteredSongs
     })
+    }catch(err){
+      console.log(err)
+    }
   }
 
   toggleForm =() => {
@@ -48,7 +74,7 @@ class Songs extends Component {
       <Container>
       <h1>Songs here</h1>
       <Button onClick={this.toggleForm} >{this.state.showForm ? 'Cancel' : 'Add'}</Button>
-      {this.state.showForm && <SongForm addSong={this.addSong}/>}
+      {this.state.showForm && <SongForm toggleForm={this.toggleForm} addSong={this.addSong}/>}
       {this.renderSongs()}
       </Container>
     )

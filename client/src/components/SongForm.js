@@ -15,11 +15,12 @@ class SongForm extends Component {
 
 
   handleSubmit = (e) => {
-    console.log(this.props)
     if(this.props.id) {
       this.props.updateSong({ id: this.props.id, ...this.state })
+      this.props.toggleForm()
     }else {
-      this.props.addSong({ id: Math.random(), ...this.state })
+      this.props.addSong({ ...this.state })
+      this.props.toggleForm()
     }
   }
 
