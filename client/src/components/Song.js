@@ -17,7 +17,7 @@ class Song extends Component {
     if(this.state.showForm){
       return(
       <div>
-        <SongForm updateSong={this.props.updateSong} {...this.props}/>  
+        <SongForm updateSong={this.props.updateSong} toggleForm={this.toggleForm} {...this.props}/>  
         <Button onClick={this.toggleForm}>Cancel</Button>
       </div>
       )

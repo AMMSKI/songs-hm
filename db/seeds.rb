@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Song.destroy_all
+
+require 'faker'
+
+10.times do
+Song.create(name:Faker::Music.album, author:Faker::Music.band )
+end
