@@ -1,8 +1,13 @@
 import React, {Component} from 'react' 
-import { Button, Container, Grid } from 'semantic-ui-react'
+import { Button, Container, Grid, Header } from 'semantic-ui-react'
 import Song from './Song'
 import SongForm from './SongForm'
 import axios from 'axios'
+import styled, { keyframes } from 'styled-components'
+import SongContainer from '../SongContainer'
+import MainHeader from './MainHeader'
+import FormCard from '../FormCard'
+import MyButton from './MyButton'
 
 class Songs extends Component {
   state = {
@@ -71,14 +76,18 @@ class Songs extends Component {
   
   render() {
     return(
-      <Container>
-      <h1>Songs here</h1>
-      <Button onClick={this.toggleForm} >{this.state.showForm ? 'Cancel' : 'Add'}</Button>
-      <div>
-      {this.state.showForm && <SongForm toggleForm={this.toggleForm} addSong={this.addSong}/>}
-      {this.renderSongs()}
-      </div>
-      </Container>
+      <>
+        <MainHeader>
+          <h1>Songs App</h1>
+          <MyButton onClick={this.toggleForm} >{this.state.showForm ? 'Cancel' : 'Add'}</MyButton>
+          {this.state.showForm && <FormCard><SongForm toggleForm={this.toggleForm} addSong={this.addSong}/></FormCard>}
+        </MainHeader>
+        <SongContainer>
+          <Grid>
+            {this.renderSongs()}
+          </Grid>
+        </SongContainer>
+      </>
     )
   }
 }
