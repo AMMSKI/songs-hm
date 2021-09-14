@@ -1,5 +1,5 @@
 import React, {Component} from 'react' 
-import { Button, Container } from 'semantic-ui-react'
+import { Button, Container, Grid } from 'semantic-ui-react'
 import Song from './Song'
 import SongForm from './SongForm'
 import axios from 'axios'
@@ -74,8 +74,10 @@ class Songs extends Component {
       <Container>
       <h1>Songs here</h1>
       <Button onClick={this.toggleForm} >{this.state.showForm ? 'Cancel' : 'Add'}</Button>
+      <div>
       {this.state.showForm && <SongForm toggleForm={this.toggleForm} addSong={this.addSong}/>}
       {this.renderSongs()}
+      </div>
       </Container>
     )
   }
